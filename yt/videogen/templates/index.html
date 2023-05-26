@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load socialaccount %}
 
 {% block title %}About Us{% endblock %}
 
 {% block content %}
-<a href="{% url 'account_login' %}">Sign in</a>
+{% if user.is_authenticated %}
+  <p>Welcome, You are logged in as {{ user.username }}</p>
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
 {% endblock %}

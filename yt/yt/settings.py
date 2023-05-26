@@ -59,7 +59,7 @@ ROOT_URLCONF = 'yt.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,7 +132,7 @@ LOGIN_REDIRECT_URL = '/'  # Or your desired redirect path
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
 # Provider specific settings
