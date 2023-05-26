@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('videogen.urls')),
     path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view()),
+    path('accounts/logout/', LogoutView.as_view(next_page='/'), name='logout'),
 ]
