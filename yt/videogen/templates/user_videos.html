@@ -1,18 +1,80 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container mt-5">
         <div class="row">
             {% for video in videos %}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ video.title }}</h5>
-                            <a href="{% url 'video_details' video.id %}" class="btn btn-primary">View Details</a>
+                <div class="col-md-3 mb-4 d-flex align-items-stretch">
+                    <a href="{% url 'video_details' video.id %}" class="card mb-4 text-center">
+                        <div class="card-body d-flex flex-column">
+                            {% if video.title|length > 50 %}
+                                <h5 class="card-title">{{ video.title|slice:":50"  }}...</h5>
+                            {% else %}
+                                <h5 class="card-title">{{ video.title }}</h5>
+                            {% endif %}
+                            <hr class="card-line">
+                            {% if video.description|length > 100 %}
+                                <p class="card-text"> "{{ video.description|slice:":100" }}..."</p>
+                            {% else %}
+                                <p class="card-text"> "{{ video.description }}"</p>
+                            {% endif %}
+                            <p class="card-date"> Created: <b>{{ video.date_generated }}</b></p>
                         </div>
-                    </div>
+                        <div class="card-script" data-script="{{ video.generated_script|slice:":200" }}..."></div>
+                        <div class="view-details">-<b>Details</b>-</div>
+                    </a>
                 </div>
+            {% empty %}
+                <p>No videos yet.</p>
             {% endfor %}
+
+            <div class="col-md-3 mb-4 d-flex align-items-stretch">
+                <a href="{% url 'generate_video' %}" class="card mb-4 text-center create-card">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Create a New Video</h5>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 {% endblock %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+    $(function() {
+        $('.card').each(function() {
+            var text = $(this).find('.card-script').data('script');
+            var $typing = $(this).find('.card-script');
+            var index = 0;
+            var timeoutId;
+
+            function type() {
+                if (index < text.length) {
+                    $typing.append(text.charAt(index));
+                    index++;
+                    timeoutId = setTimeout(type, Math.random() * 100);
+                }
+            }
+
+            $(this).on('mouseenter', function() {
+                type();
+            });
+
+            $(this).on('mouseleave', function() {
+                $typing.text('');
+                index = 0;
+                clearTimeout(timeoutId);
+            });
+        });
+    });
+    </script>
+{% endblock %}
+
+

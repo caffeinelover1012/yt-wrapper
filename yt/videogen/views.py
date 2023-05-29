@@ -3,7 +3,7 @@ from .forms import VideoForm
 from .models import Video
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 # you can now use response.choices[0].text to get the generated text
