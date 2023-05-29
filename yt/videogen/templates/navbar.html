@@ -46,11 +46,21 @@
           </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-user-circle fa-lg"></i>
-          </a>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-user-circle fa-lg"></i>
+                  <span class="ms-2">{{ request.user.username }}</span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownAbout">
+                  <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+            </li>
+          {% endif %}
         </li>
       </ul>
       </div>
