@@ -3,7 +3,7 @@ from .forms import VideoForm
 from .models import Video
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 
 # you can now use response.choices[0].text to get the generated text
@@ -23,12 +23,12 @@ def generate_video(request):
             word_limit = form.cleaned_data['word_limit']
 
             # TODO: call to GPT-3 API to generate script, tags, etc.
-            response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt="Generate a 200 word informative youtube script about the topic "+ title+ ": '{}'",
-            max_tokens=word_limit
+            response = openai.ChatCompletion.create(             
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": "Generate a 200 word informative youtube script about the topic "+ title + "be as sarcastic as you can"}],
+                max_tokens=word_limit
             )
-            generated_script = (list(response.choices)[0].to_dict()['text'])
+            generated_script = response['choices'][0]['message']['content']
 
 
             video = Video(
