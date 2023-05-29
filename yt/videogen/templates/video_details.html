@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card text-center" style="width: 30rem;">
+        <div class="card-body">
+            <h2 class="card-title">{{ video.title }}</h2>
+            <h6 class="card-subtitle mb-2 text-muted">Created at: {{ video.date_generated|date:"F j, Y" }}</h6> <!-- Date when video was created -->
+            <p class="card-text">Description: {{ video.description }}</p>
+            <hr>
+            <h4 class="card-text">Generated Script:</h4>
+            <p class="card-text">{{ video.generated_script }}</p> <!-- Script of the video -->
+            <hr>
+            <h6 class="card-subtitle mb-2 text-muted"><strong>Tags:</strong> {{ video.tags }}</h6> <!-- Tags -->
+        </div>
+    </div>
+</div>
+{% endblock %}
