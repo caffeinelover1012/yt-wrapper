@@ -63,11 +63,17 @@
                 }
             }
 
+            var delayTimerId;
+
             $(this).on('mouseenter', function() {
-                type();
+                delayTimerId = setTimeout(function() {
+                    type();
+                }, 0);              //change 0 to something if you wanna add a delay
+
             });
 
             $(this).on('mouseleave', function() {
+                clearTimeout(delayTimerId);
                 $typing.text('');
                 index = 0;
                 clearTimeout(timeoutId);
@@ -76,5 +82,6 @@
     });
     </script>
 {% endblock %}
+
 
 
